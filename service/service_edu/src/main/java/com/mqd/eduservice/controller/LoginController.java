@@ -14,7 +14,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public Result login(@RequestBody String username){
-        return Result.ok().setCode(Status.OK.code).setMessage(Status.OK.msg)
+        return Result.ok().setCode(Status.OK)
                 .addData("token","admin-token");
     }
 
@@ -22,7 +22,7 @@ public class LoginController {
     public Result getInfo(String token){
         List<String> roles = new ArrayList<>();
         roles.add("admin");
-        return Result.ok().setCode(Status.OK.code).setMessage(Status.OK.msg)
+        return Result.ok().setCode(Status.OK)
                 .addData("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif")
                 .addData("introduction","超级管理员")
                 .addData("name","超级管理员-张三")
@@ -31,6 +31,6 @@ public class LoginController {
 
     @PostMapping("/logout")
     public Result logout(){
-        return Result.ok().setCode(Status.OK.code).setMessage(Status.OK.msg);
+        return Result.ok().setCode(Status.OK);
     }
 }

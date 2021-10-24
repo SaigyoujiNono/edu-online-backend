@@ -20,7 +20,7 @@ public class Result {
     private Integer code;
 
     @ApiModelProperty(value = "状态消息")
-    private String message;
+    private String message = "0";
 
     @ApiModelProperty(value = "数据集")
     private final Map<String, Object> data = new HashMap<>();
@@ -34,10 +34,10 @@ public class Result {
     }
 
     public static Result ok(){
-        return new Result().setSuccess(true);
+        return new Result().setSuccess(true).setCode(Status.OK);
     }
 
     public static Result failed(){
-        return new Result().setSuccess(false);
+        return new Result().setSuccess(false).setCode(Status.ERROR);
     }
 }

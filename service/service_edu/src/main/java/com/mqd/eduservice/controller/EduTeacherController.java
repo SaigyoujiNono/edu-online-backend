@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mqd.eduservice.pojo.EduTeacher;
 import com.mqd.eduservice.pojo.vo.TeacherQuery;
 import com.mqd.eduservice.service.EduTeacherService;
+import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
-import com.mqd.result.Status;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @Api(tags = "老师管理")
 @RestController
-@RequestMapping("/eduservice")
+@RequestMapping("/eduservice/teacher")
 @CrossOrigin
 public class EduTeacherController {
 
@@ -44,8 +44,7 @@ public class EduTeacherController {
     @GetMapping("/teacher/{page}")
     public Result getTeacher(@PathVariable Long page,
                              Long pageSize,
-                             TeacherQuery query){
-        Result res = Result.ok().setCode(Status.OK.code).setMessage(Status.OK.msg);
+                             TeacherQuery query) throws CustomException {
         //判断pageSize参数，如果超出设定直接返回空或者其他设定
         long size;
         if (pageSize==null){
@@ -53,7 +52,7 @@ public class EduTeacherController {
         }else if (pageSize>20){
             size = 20L;
         }else if (pageSize<=0){
-            return res;
+            throw new CustomException("pageSize不能小于或等于0");
         }else {
             size = pageSize;
         }
@@ -84,53 +83,52 @@ public class EduTeacherController {
 
         Page<EduTeacher> pageRes = eduTeacherService.page(pages, wrapper);
         if (pageRes.getCurrent()>pageRes.getPages()){
-            return res;
+            throw new CustomException("当前页数大于总页数!");
         }
         resMap.put("teachers",pageRes.getRecords());
         resMap.put("pages",pageRes.getPages());
         resMap.put("total", pageRes.getTotal());
         resMap.put("current",pageRes.getCurrent());
-        return res.addData("teacherInfo",resMap);
+        return Result.ok().addData("teacherInfo",resMap);
     }
     @GetMapping("/teacher")
-    public Result getTeacher(Long pageSize,TeacherQuery query){
+    public Result getTeacher(Long pageSize,TeacherQuery query) throws CustomException {
         return getTeacher(1L,pageSize,query);
     }
 
     @ApiOperation(value = "新增一个老师", notes = "查询所有老师信息。")
     @PostMapping(value = "/teacher")
-    public Result addTeacher(@RequestBody EduTeacher teacher){
+    public Result addTeacher(@RequestBody EduTeacher teacher) throws CustomException {
         System.out.println(teacher);
         if (teacher.getId()!=null || teacher.getIsDeleted()!=null || teacher.getGmtCreate()!=null ||
         teacher.getGmtModified()!=null){
-            //返回一个结果集，参数不正确
-            return Result.failed().setCode(Status.PARAMETER_ERROR.code).setMessage(Status.PARAMETER_ERROR.msg);
+            throw new CustomException("添加参数不正确!");
         }
         boolean save = eduTeacherService.save(teacher);
         if (save){
-            return Result.ok().setCode(Status.OK.code).setMessage(Status.OK.msg);
+            return Result.ok();
         }else{
-            return Result.failed().setCode(Status.ADD_FAILED.code).setMessage(Status.ADD_FAILED.msg);
+            throw new CustomException("未知原因添加失败!");
         }
     }
 
     @DeleteMapping("/teacher/{id}")
-    public Result removeTeacher(@PathVariable String id){
+    public Result removeTeacher(@PathVariable String id) throws CustomException {
         boolean remove = eduTeacherService.removeById(id);
         if (remove){
-            return Result.ok().setCode(Status.OK.code).setMessage(Status.OK.msg);
+            return Result.ok();
         }else{
-            return Result.failed().setCode(Status.REMOVE_FAILED.code).setMessage(Status.REMOVE_FAILED.msg);
+            throw new CustomException("id:"+id+"---> 删除失败!");
         }
     }
 
     @PutMapping("/teacher")
-    public Result updateTeacher(@RequestBody EduTeacher teacher){
+    public Result updateTeacher(@RequestBody EduTeacher teacher) throws CustomException {
         boolean flag = eduTeacherService.updateById(teacher);
         if (flag){
-            return Result.ok().setCode(Status.OK.code).setMessage(Status.OK.msg);
+            return Result.ok();
         }else{
-            return Result.failed().setCode(Status.UPDATE_FAILED.code).setMessage(Status.UPDATE_FAILED.msg);
+            throw new CustomException("id:"+teacher.getId()+"---> 更新失败!");
         }
     }
 }

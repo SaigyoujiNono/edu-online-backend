@@ -19,17 +19,11 @@ public class OssController {
 
 //    @ApiParam(type = "file")
     @PostMapping("/avatar")
-    public Result avatarUpload(@RequestPart("file") MultipartFile file){
-        //文件尺寸不能超过1M
-        if (file.getSize()>1024*1024) {
-            return Result.failed().setCode(Status.FILE_MAXSIZE_OVERFLOW.code).setMessage(Status.FILE_MAXSIZE_OVERFLOW.msg);
-        }
+    public Result avatarUpload(@RequestPart("file") MultipartFile file) throws AddException {
         String url = ossService.avatarUpload(file);
         if (url == null){
-            return Result.failed();
+            throw new AddException("图片上传失败");
         }
-        Result result = Result.ok().setCode(Status.OK.code).setMessage(Status.OK.msg);
-        result.addData("url",url);
-        return result;
+        return Result.ok().setCode(Status.OK).addData("url",url);
     }
 }
