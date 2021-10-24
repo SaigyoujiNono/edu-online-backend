@@ -1,0 +1,12 @@
+server:
+  port: 8002
+
+spring:
+  application:
+    name: service-oss
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 1MB
