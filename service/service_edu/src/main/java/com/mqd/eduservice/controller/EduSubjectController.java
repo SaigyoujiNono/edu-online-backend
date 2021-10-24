@@ -1,12 +1,17 @@
 package com.mqd.eduservice.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mqd.eduservice.pojo.EduSubject;
+import com.mqd.eduservice.pojo.vo.SubjectQuery;
 import com.mqd.eduservice.service.EduSubjectService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -36,6 +41,24 @@ public class EduSubjectController {
         throw new CustomException(sub.getTitle()+"添加失败!");
     }
 
+    @GetMapping("/subject")
+    public Result getSubject(SubjectQuery sub){
+        QueryWrapper<EduSubject> wrapper = new QueryWrapper<EduSubject>();
+        String parentId = sub.getParentId();
+        if (StringUtils.hasText(parentId)){
+            wrapper.eq("parent_id",parentId);
+        }
+        List<EduSubject> list = subjectService.list(wrapper);
+        return Result.ok().addData("primarySubList",list);
+    }
+
+    @DeleteMapping("/subject/{id}")
+    public Result delSubject(@PathVariable String id) throws CustomException {
+        if (subjectService.delSubject(id)){
+            return Result.ok();
+        }
+        throw  new CustomException("删除失败!");
+    }
 
 }
 

@@ -1,8 +1,8 @@
 package com.mqd.oss.controller;
 
+import com.mqd.exception.CustomException;
 import com.mqd.oss.service.OssService;
 import com.mqd.result.Result;
-import com.mqd.result.Status;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +19,11 @@ public class OssController {
 
 //    @ApiParam(type = "file")
     @PostMapping("/avatar")
-    public Result avatarUpload(@RequestPart("file") MultipartFile file) throws AddException {
+    public Result avatarUpload(@RequestPart("file") MultipartFile file) throws CustomException {
         String url = ossService.avatarUpload(file);
         if (url == null){
-            throw new AddException("图片上传失败");
+            throw new CustomException("图片上传失败");
         }
-        return Result.ok().setCode(Status.OK).addData("url",url);
+        return Result.ok().addData("url",url);
     }
 }

@@ -14,30 +14,30 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 课程科目
+ * 课程
  * </p>
  *
  * @author mqd
- * @since 2021-10-23
+ * @since 2021-10-24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="EduSubject对象", description="课程科目")
-public class EduSubject implements Serializable {
+@ApiModel(value="EduChapter对象", description="课程")
+public class EduChapter implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "课程类别ID")
+    @ApiModelProperty(value = "章节ID")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
-    @ApiModelProperty(value = "类别名称")
+    @ApiModelProperty(value = "课程ID")
+    private String courseId;
+
+    @ApiModelProperty(value = "章节名称")
     private String title;
 
-    @ApiModelProperty(value = "父ID")
-    private String parentId;
-
-    @ApiModelProperty(value = "排序字段")
+    @ApiModelProperty(value = "显示排序")
     private Integer sort;
 
     @ApiModelProperty(value = "创建时间")

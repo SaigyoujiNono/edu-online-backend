@@ -1,11 +1,9 @@
 package com.mqd.eduservice.pojo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,31 +12,33 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 课程科目
+ * 课程收藏
  * </p>
  *
  * @author mqd
- * @since 2021-10-23
+ * @since 2021-10-24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="EduSubject对象", description="课程科目")
-public class EduSubject implements Serializable {
+@ApiModel(value="EduCourseCollect对象", description="课程收藏")
+public class EduCourseCollect implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "课程类别ID")
+    @ApiModelProperty(value = "收藏ID")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
-    @ApiModelProperty(value = "类别名称")
-    private String title;
+    @ApiModelProperty(value = "课程讲师ID")
+    private String courseId;
 
-    @ApiModelProperty(value = "父ID")
-    private String parentId;
+    @ApiModelProperty(value = "课程专业ID")
+    private String memberId;
 
-    @ApiModelProperty(value = "排序字段")
-    private Integer sort;
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
+    @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
+    private Integer isDeleted;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
