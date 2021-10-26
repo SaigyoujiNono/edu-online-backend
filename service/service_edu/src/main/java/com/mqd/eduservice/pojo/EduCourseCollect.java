@@ -38,7 +38,7 @@ public class EduCourseCollect implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
-    private Integer isDeleted;
+    private Boolean isDeleted;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)

@@ -2,6 +2,8 @@ package com.mqd.eduservice.service;
 
 import com.mqd.eduservice.pojo.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mqd.eduservice.pojo.vo.CourseInfoVo;
+import com.mqd.exception.CustomException;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EduCourseService extends IService<EduCourse> {
 
+    CourseInfoVo saveCourseInfo(CourseInfoVo courseInfo) throws CustomException;
 }
