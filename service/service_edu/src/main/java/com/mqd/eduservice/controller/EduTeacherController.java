@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -94,6 +95,13 @@ public class EduTeacherController {
     @GetMapping("/teacher")
     public Result getTeacher(Long pageSize,TeacherQuery query) throws CustomException {
         return getTeacher(1L,pageSize,query);
+    }
+
+    @GetMapping("/teacherAll")
+    public Result getTeacherAll() throws CustomException {
+
+        List<EduTeacher> list = eduTeacherService.list(null);
+        return Result.ok().addData("teacherList",list);
     }
 
     @ApiOperation(value = "新增一个老师", notes = "查询所有老师信息。")

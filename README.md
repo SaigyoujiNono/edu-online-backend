@@ -27,12 +27,11 @@ aliyun:
 ```yaml
 spring:
   datasource:
-    url: 
-    username: 
-    password: 
+    url: #SQL URL
+    username: #SQL  用户名
+    password:
+edu_log:
+  log:
+    path: #日志路径
 ```
 
-修改logback-spring.xml下的日志目录
-```xml
-<property name="log.path" value="{日志目录}" />
-```

@@ -18,7 +18,7 @@ public class OssController {
     private OssService ossService;
 
 //    @ApiParam(type = "file")
-    @PostMapping("/avatar")
+    @PostMapping("/imgUpload")
     public Result avatarUpload(@RequestPart("file") MultipartFile file) throws CustomException {
         String url = ossService.avatarUpload(file);
         if (url == null){

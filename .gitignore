@@ -33,5 +33,6 @@ build/
 
 ### configuration ###
 *-dev.yml
+*-prod.yml
 **/test/
 /log
