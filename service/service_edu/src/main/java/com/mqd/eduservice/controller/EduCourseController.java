@@ -7,11 +7,7 @@ import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -22,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-10-24
  */
 @RestController
-@RequestMapping("/eduservice/edu-course")
+@RequestMapping("/eduservice/course")
+@CrossOrigin
 public class EduCourseController {
 
     @Autowired
