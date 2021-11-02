@@ -2,6 +2,10 @@ package com.mqd.eduservice.mapper;
 
 import com.mqd.eduservice.pojo.EduChapter;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mqd.eduservice.pojo.dto.ChapterAndVideo;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-10-24
  */
 public interface EduChapterMapper extends BaseMapper<EduChapter> {
-
+    List<ChapterAndVideo> getChapterAllByCourseId(String id);
 }

@@ -1,6 +1,7 @@
 server:
   port: 8002
 
+
 spring:
   application:
     name: service-oss
@@ -8,5 +9,5 @@ spring:
     active: dev
   servlet:
     multipart:
-      max-file-size: 1MB
-      max-request-size: 1MB
+      max-file-size: 5MB
+      max-request-size: 10MB

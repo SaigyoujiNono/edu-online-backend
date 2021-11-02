@@ -2,23 +2,26 @@ package com.mqd.eduservice.controller;
 
 import com.mqd.result.Result;
 import com.mqd.result.Status;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/eduservice")
 @CrossOrigin
 public class LoginController {
 
-    @PostMapping("/login")
+    @ApiOperation(value = "登录接口")
+    @PostMapping("/user/login")
     public Result login(@RequestBody String username){
         return Result.ok().setCode(Status.OK)
                 .addData("token","admin-token");
     }
 
-    @GetMapping("/info")
+    @ApiOperation(value = "获取登录用户信息")
+    @GetMapping("/user/info")
     public Result getInfo(String token){
         List<String> roles = new ArrayList<>();
         roles.add("admin");
@@ -29,7 +32,8 @@ public class LoginController {
                 .addData("roles",roles);
     }
 
-    @PostMapping("/logout")
+    @ApiOperation(value = "注销登录")
+    @PostMapping("/user/logout")
     public Result logout(){
         return Result.ok().setCode(Status.OK);
     }

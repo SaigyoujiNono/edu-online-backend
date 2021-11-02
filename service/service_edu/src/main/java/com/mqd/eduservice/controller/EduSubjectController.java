@@ -7,6 +7,7 @@ import com.mqd.eduservice.pojo.vo.SubjectQuery;
 import com.mqd.eduservice.service.EduSubjectService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -27,11 +28,14 @@ import java.util.List;
 public class EduSubjectController {
     @Autowired
     private EduSubjectService subjectService;
+
+    @ApiOperation(value = "以树的形式返回多级分类")
     @GetMapping("/tree")
     public Result getTree() {
         return Result.ok().addData("tree",subjectService.getSubjectTree());
     }
 
+    @ApiOperation(value = "添加一个分类")
     @PostMapping("/subject")
     public Result addSubject(@RequestBody EduSubject sub) throws CustomException {
         boolean save = subjectService.save(sub);
@@ -41,6 +45,7 @@ public class EduSubjectController {
         throw new CustomException(sub.getTitle()+"添加失败!");
     }
 
+    @ApiOperation(value = "根据条件获取分类信息")
     @GetMapping("/subject")
     public Result getSubject(SubjectQuery sub){
         QueryWrapper<EduSubject> wrapper = new QueryWrapper<EduSubject>();
@@ -52,6 +57,7 @@ public class EduSubjectController {
         return Result.ok().addData("primarySubList",list);
     }
 
+    @ApiOperation(value = "根据id删除一个小节")
     @DeleteMapping("/subject/{id}")
     public Result delSubject(@PathVariable String id) throws CustomException {
         if (subjectService.delSubject(id)){

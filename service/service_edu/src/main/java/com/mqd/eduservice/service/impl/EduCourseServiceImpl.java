@@ -77,4 +77,36 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         courseInfo.setId(eduCourse.getId());
         return courseInfo;
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)//开启事务
+    public CourseInfoVo updateCourseInfo(CourseInfoVo courseInfo) throws CustomException {
+        //先判断老师是否存在
+        EduTeacher eduTeacher = teacherMapper.selectById(courseInfo.getTeacherId());
+        if (eduTeacher == null){
+            throw new CustomException("老师不存在");
+        }
+
+        //判断课程分类id是否正确
+        EduSubject eduSubject = subjectMapper.selectById(courseInfo.getSubjectId());
+        if (eduSubject == null){
+            throw new CustomException("课程分类不存在");
+        }
+
+        //新建一个课程实例
+        EduCourse eduCourse = new EduCourse();
+        BeanUtils.copyProperties(courseInfo,eduCourse);
+        int update = baseMapper.updateById(eduCourse);
+        if (update <= 0){
+            throw new CustomException("失败了");
+        }
+        EduCourseDescription eduCourseDescription = new EduCourseDescription();
+        BeanUtils.copyProperties(courseInfo,eduCourseDescription);
+        //设置课程id关联课程描述id
+        update = desMapper.updateById(eduCourseDescription);
+        if (update <= 0){
+            throw new CustomException("失败了");
+        }
+        return courseInfo;
+    }
 }

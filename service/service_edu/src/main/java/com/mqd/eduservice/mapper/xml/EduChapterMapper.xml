@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mqd.eduservice.mapper.EduChapterMapper">
 
+    <select id="getChapterAllByCourseId" parameterType="string" resultType="com.mqd.eduservice.pojo.dto.ChapterAndVideo">
+        SELECT c.id,c.sort,c.course_id,c.title,v.id video_id,v.title video_title,v.sort video_sort
+        FROM edu_chapter c
+        LEFT JOIN edu_video v
+        ON v.chapter_id = c.id
+        WHERE c.course_id = #{id}
+        ORDER BY sort,video_sort
+    </select>
 </mapper>

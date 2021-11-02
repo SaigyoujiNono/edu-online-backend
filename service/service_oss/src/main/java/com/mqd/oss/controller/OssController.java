@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @Api(tags = "文件上传")
 @RestController
 @RequestMapping(("/oss/file"))
@@ -19,7 +21,7 @@ public class OssController {
 
 //    @ApiParam(type = "file")
     @PostMapping("/imgUpload")
-    public Result avatarUpload(@RequestPart("file") MultipartFile file) throws CustomException {
+    public Result imgUpload(@RequestPart("file") MultipartFile file) throws CustomException, IOException {
         String url = ossService.avatarUpload(file);
         if (url == null){
             throw new CustomException("图片上传失败");

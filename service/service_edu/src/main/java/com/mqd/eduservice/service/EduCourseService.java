@@ -16,4 +16,6 @@ import com.mqd.exception.CustomException;
 public interface EduCourseService extends IService<EduCourse> {
 
     CourseInfoVo saveCourseInfo(CourseInfoVo courseInfo) throws CustomException;
+
+    CourseInfoVo updateCourseInfo(CourseInfoVo courseInfo) throws CustomException;
 }

@@ -92,11 +92,14 @@ public class EduTeacherController {
         resMap.put("current",pageRes.getCurrent());
         return Result.ok().addData("teacherInfo",resMap);
     }
+
+    @ApiOperation(value = "根据条件获取第一页老师的信息")
     @GetMapping("/teacher")
     public Result getTeacher(Long pageSize,TeacherQuery query) throws CustomException {
         return getTeacher(1L,pageSize,query);
     }
 
+    @ApiOperation(value = "获取所有的老师信息")
     @GetMapping("/teacherAll")
     public Result getTeacherAll() throws CustomException {
 
@@ -120,6 +123,7 @@ public class EduTeacherController {
         }
     }
 
+    @ApiOperation(value = "根据id删除老师")
     @DeleteMapping("/teacher/{id}")
     public Result removeTeacher(@PathVariable String id) throws CustomException {
         boolean remove = eduTeacherService.removeById(id);
@@ -130,6 +134,7 @@ public class EduTeacherController {
         }
     }
 
+    @ApiOperation(value = "根据id更新老师信息")
     @PutMapping("/teacher")
     public Result updateTeacher(@RequestBody EduTeacher teacher) throws CustomException {
         boolean flag = eduTeacherService.updateById(teacher);

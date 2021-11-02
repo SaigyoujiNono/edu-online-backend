@@ -19,8 +19,9 @@ spring:
       read-only: false
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: UTC
+    time-zone: GMT+8
 
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:com/mqd/eduservice/mapper/xml/*Mapper.xml
