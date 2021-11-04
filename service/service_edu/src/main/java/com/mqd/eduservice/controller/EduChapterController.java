@@ -4,18 +4,15 @@ package com.mqd.eduservice.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mqd.eduservice.pojo.EduChapter;
 import com.mqd.eduservice.pojo.EduVideo;
-import com.mqd.eduservice.pojo.dto.ChapterAndVideo;
 import com.mqd.eduservice.pojo.vo.ChapterInfoVo;
 import com.mqd.eduservice.service.EduChapterService;
 import com.mqd.eduservice.service.EduVideoService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -49,8 +46,8 @@ public class EduChapterController {
     }
 
     @ApiOperation(value = "删除一个章节", notes = "删除一个章节")
-    @DeleteMapping("/chapter")
-    public Result deleteChapter(String id) throws CustomException {
+    @DeleteMapping("/chapter/{id}")
+    public Result deleteChapter(@PathVariable String id) throws CustomException {
         // 先查询是否包含小节 如果包含小节需要删除所有小节之后才能删除章节
         QueryWrapper<EduVideo> videoQuery = new QueryWrapper<EduVideo>();
         videoQuery.eq("chapter_id",id);
@@ -67,7 +64,7 @@ public class EduChapterController {
 
     @ApiOperation(value = "更新一个章节信息", notes = "根据id更新一个章节信息")
     @PutMapping("/chapter")
-    public Result updateChapter(EduChapter chapter) throws CustomException {
+    public Result updateChapter(@RequestBody EduChapter chapter) throws CustomException {
         boolean b = chapterService.updateById(chapter);
         if (b){
             return Result.ok();

@@ -2,4 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mqd.eduservice.mapper.EduCourseMapper">
 
+    <select id="getBeforePublishCourse" parameterType="string" resultType="com.mqd.eduservice.pojo.dto.CourseInfoDto">
+        SELECT id,
+               cover,
+               title,
+               (SELECT `name` FROM edu_teacher WHERE id=teacher_id) teacher_name,
+               (SELECT `title` FROM edu_subject WHERE id = subject_parent_id) subject_parent_name,
+               (SELECT `title` FROM edu_subject WHERE id=subject_id) subject_name,
+               price,
+               lesson_num
+        FROM edu_course
+        WHERE id=#{id}
+    </select>
+    <select id="getCourseListByQuery" resultType="com.mqd.eduservice.pojo.dto.CourseInfoDto">
+        SELECT
+            id,
+            (SELECT `name` FROM edu_teacher WHERE is_deleted=0 AND id = teacher_id) teacher_name,
+            (SELECT `title` FROM edu_subject WHERE id = subject_id) subject_name,
+            (SELECT `title` FROM edu_subject WHERE id = subject_parent_id) subject_parent_name,
+            title,
+            price,
+            lesson_num,
+            cover,
+            buy_count,
+            view_count,
+            `status`
+        FROM edu_course
+        ${ew.customSqlSegment}
+<!--        <where>-->
+<!--            is_deleted=0-->
+<!--            <if test="title != null">-->
+<!--                AND title like concat('%',#{title},'%')-->
+<!--            </if>-->
+<!--            <if test="teacherId != null">-->
+<!--                AND teacher_id=#{teacherId}-->
+<!--            </if>-->
+<!--            <if test="subjectId != null">-->
+<!--                AND subject_id=#{subjectId}-->
+<!--            </if>-->
+<!--            <if test="subjectParentId != null">-->
+<!--                AND subject_parent_id=#{subjectParentId}-->
+<!--            </if>-->
+<!--            <if test="subjectParentId != null">-->
+<!--                AND subject_parent_id=#{subjectParentId}-->
+<!--            </if>-->
+<!--            <if test="min != null">-->
+<!--                AND price <![CDATA[>=]]> #{min}-->
+<!--            </if>-->
+<!--            <if test="max != null">-->
+<!--                AND price <![CDATA[<=]]> #{max}-->
+<!--            </if>-->
+<!--        </where>-->
+        ORDER BY gmt_modified DESC
+    </select>
 </mapper>

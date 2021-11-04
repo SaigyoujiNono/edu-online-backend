@@ -1,6 +1,9 @@
 package com.mqd.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mqd.eduservice.mapper.EduCourseDescriptionMapper;
 import com.mqd.eduservice.mapper.EduSubjectMapper;
 import com.mqd.eduservice.mapper.EduTeacherMapper;
@@ -9,7 +12,9 @@ import com.mqd.eduservice.mapper.EduCourseMapper;
 import com.mqd.eduservice.pojo.EduCourseDescription;
 import com.mqd.eduservice.pojo.EduSubject;
 import com.mqd.eduservice.pojo.EduTeacher;
+import com.mqd.eduservice.pojo.dto.CourseInfoDto;
 import com.mqd.eduservice.pojo.vo.CourseInfoVo;
+import com.mqd.eduservice.pojo.vo.CourseQuery;
 import com.mqd.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mqd.exception.CustomException;
@@ -17,6 +22,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -109,4 +119,62 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }
         return courseInfo;
     }
+
+    @Override
+    public CourseInfoDto getBeforePublishCourse(String id) {
+        return baseMapper.getBeforePublishCourse(id);
+    }
+
+    @Override
+    public IPage<CourseInfoDto> getCourseListByQuery(CourseQuery query, Page<CourseInfoDto> page) {
+        QueryWrapper<CourseQuery> queryWrapper = new QueryWrapper<>();
+        String title = query.getTitle();
+        String subjectId = query.getSubjectId();
+        String subjectParentId = query.getSubjectParentId();
+        String teacherId = query.getTeacherId();
+        BigDecimal priceMin = query.getPriceMin();
+        BigDecimal priceMax = query.getPriceMax();
+        Long minBuyCount = query.getMinBuyCount();
+        Long maxBuyCount = query.getMaxBuyCount();
+        Long minViewCount = query.getMinViewCount();
+        Long maxViewCount = query.getMaxViewCount();
+        String status = query.getStatus();
+        queryWrapper.eq("is_deleted","0");
+        //构建条件查询
+        if (StringUtils.hasText(title)){
+            queryWrapper.like("title",title);
+        }
+        if (StringUtils.hasText(subjectId)){
+            queryWrapper.eq("subject_id",subjectId);
+        }
+        if (StringUtils.hasText(subjectParentId)){
+            queryWrapper.eq("subject_parent_id",subjectParentId);
+        }
+        if (StringUtils.hasText(teacherId)){
+            queryWrapper.eq("teacher_id",teacherId);
+        }
+        if (!ObjectUtils.isEmpty(priceMin)){
+            queryWrapper.ge("price",priceMin);
+        }
+        if (!ObjectUtils.isEmpty(priceMax)){
+            queryWrapper.le("price",priceMax);
+        }
+        if (!ObjectUtils.isEmpty(minBuyCount)){
+            queryWrapper.ge("buy_count",minBuyCount);
+        }
+        if (!ObjectUtils.isEmpty(maxBuyCount)){
+            queryWrapper.le("buy_count",maxBuyCount);
+        }
+        if (!ObjectUtils.isEmpty(minViewCount)){
+            queryWrapper.ge("view_count",minViewCount);
+        }
+        if (!ObjectUtils.isEmpty(maxViewCount)){
+            queryWrapper.le("view_count",maxViewCount);
+        }
+        if (StringUtils.hasText(status)){
+            queryWrapper.eq("status",status);
+        }
+        return baseMapper.getCourseListByQuery(page, queryWrapper);
+    }
+
 }

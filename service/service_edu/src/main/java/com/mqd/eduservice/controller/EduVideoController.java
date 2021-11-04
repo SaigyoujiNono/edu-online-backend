@@ -27,10 +27,10 @@ public class EduVideoController {
 
     @ApiOperation(value = "添加一个小节")
     @PostMapping("/video")
-    public Result addVideo(EduVideo video) throws CustomException {
+    public Result addVideo(@RequestBody EduVideo video) throws CustomException {
         boolean save = videoService.saveVideo(video);
         if (save) {
-            return Result.ok();
+            return Result.ok().addData("video",video);
         }
         throw new CustomException("添加失败");
     }
@@ -47,7 +47,7 @@ public class EduVideoController {
 
     @ApiOperation(value = "更新一个小节")
     @PutMapping("/video")
-    public Result deleteVideo(EduVideo video) throws CustomException {
+    public Result updateVideo(@RequestBody EduVideo video) throws CustomException {
         boolean b = videoService.updateById(video);
         if (b) {
             return Result.ok();
