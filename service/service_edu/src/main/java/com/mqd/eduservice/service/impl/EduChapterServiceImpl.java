@@ -7,14 +7,11 @@ import com.mqd.eduservice.pojo.dto.ChapterAndVideo;
 import com.mqd.eduservice.pojo.vo.ChapterInfoVo;
 import com.mqd.eduservice.service.EduChapterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -26,6 +23,7 @@ import java.util.Map;
  */
 @Service
 public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChapter> implements EduChapterService {
+    @Override
     public List<ChapterInfoVo> getChapterAllByCourseId(String id){
         List<ChapterInfoVo> res = new ArrayList<>();
         List<ChapterAndVideo> list = baseMapper.getChapterAllByCourseId(id);
@@ -40,21 +38,29 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
                         .setSort(chapterAndVideo.getSort())
                         .setTitle(chapterAndVideo.getTitle());
                 if (StringUtils.hasText(chapterAndVideo.getVideoId())) {
-                    EduVideo eduVideo = new EduVideo().setId(chapterAndVideo.getVideoId())
-                            .setTitle(chapterAndVideo.getVideoTitle())
-                            .setSort(chapterAndVideo.getVideoSort());
+                    EduVideo eduVideo = convertChapterToVideo(chapterAndVideo);
                     cur.add(eduVideo);
                 }
             } else {
-                EduVideo eduVideo = new EduVideo().setId(chapterAndVideo.getVideoId())
-                        .setTitle(chapterAndVideo.getVideoTitle())
-                        .setSort(chapterAndVideo.getVideoSort());
+                EduVideo eduVideo = convertChapterToVideo(chapterAndVideo);
                 if (cur != null) {
                     cur.add(eduVideo);
                 }
             }
         }
-
         return res;
+    }
+
+    public EduVideo convertChapterToVideo(ChapterAndVideo c){
+        return new EduVideo().setId(c.getVideoId())
+                .setTitle(c.getVideoTitle())
+                .setIsFree(c.getVideoIsFree())
+                .setSort(c.getVideoSort())
+                .setVideoOriginalName(c.getVideoOriginalName())
+                .setVideoSourceId(c.getVideoSourceId())
+                .setDuration(c.getDuration())
+                .setPlayCount(c.getPlayCount())
+                .setSize(c.getSize())
+                .setStatus(c.getStatus());
     }
 }

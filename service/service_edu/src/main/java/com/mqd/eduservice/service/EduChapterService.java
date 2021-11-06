@@ -2,7 +2,6 @@ package com.mqd.eduservice.service;
 
 import com.mqd.eduservice.pojo.EduChapter;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mqd.eduservice.pojo.dto.ChapterAndVideo;
 import com.mqd.eduservice.pojo.vo.ChapterInfoVo;
 
 import java.util.List;
@@ -17,4 +16,5 @@ import java.util.List;
  */
 public interface EduChapterService extends IService<EduChapter> {
     List<ChapterInfoVo> getChapterAllByCourseId(String id);
+
 }
