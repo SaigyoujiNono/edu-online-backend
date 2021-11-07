@@ -14,10 +14,10 @@ import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,10 +35,10 @@ import java.util.Map;
 @CrossOrigin
 public class EduCourseController {
 
-    @Autowired
+    @Resource
     private EduCourseService courseService;
 
-    @Autowired
+    @Resource
     private EduCourseDescriptionService descService;
 
     @ApiOperation(value = "添加课程基本信息")

@@ -10,11 +10,11 @@ import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +34,7 @@ import java.util.Map;
 @CrossOrigin
 public class EduTeacherController {
 
-    @Autowired
+    @Resource
     private EduTeacherService eduTeacherService;
 
     /**
@@ -62,7 +62,7 @@ public class EduTeacherController {
         Map<String,Object> resMap = new HashMap<>();
 
 
-        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<EduTeacher>();
+        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
         //构建条件
         String name = query.getName();
         Integer level = query.getLevel();
@@ -101,7 +101,7 @@ public class EduTeacherController {
 
     @ApiOperation(value = "获取所有的老师信息")
     @GetMapping("/teacherAll")
-    public Result getTeacherAll() throws CustomException {
+    public Result getTeacherAll() {
 
         List<EduTeacher> list = eduTeacherService.list(null);
         return Result.ok().addData("teacherList",list);

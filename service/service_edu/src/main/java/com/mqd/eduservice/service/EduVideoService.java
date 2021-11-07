@@ -15,4 +15,7 @@ import com.mqd.exception.CustomException;
 public interface EduVideoService extends IService<EduVideo> {
 
     boolean saveVideo(EduVideo video) throws CustomException;
+
+    //删除一个小节的同时也删除视频
+    boolean removeVideoAll(String id) throws CustomException;
 }

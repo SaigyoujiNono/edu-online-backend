@@ -8,10 +8,10 @@ import com.mqd.eduservice.service.EduSubjectService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ import java.util.List;
 @RequestMapping("/eduservice/subject")
 @CrossOrigin
 public class EduSubjectController {
-    @Autowired
+    @Resource
     private EduSubjectService subjectService;
 
     @ApiOperation(value = "以树的形式返回多级分类")
@@ -48,7 +48,7 @@ public class EduSubjectController {
     @ApiOperation(value = "根据条件获取分类信息")
     @GetMapping("/subject")
     public Result getSubject(SubjectQuery sub){
-        QueryWrapper<EduSubject> wrapper = new QueryWrapper<EduSubject>();
+        QueryWrapper<EduSubject> wrapper = new QueryWrapper<>();
         String parentId = sub.getParentId();
         if (StringUtils.hasText(parentId)){
             wrapper.eq("parent_id",parentId);

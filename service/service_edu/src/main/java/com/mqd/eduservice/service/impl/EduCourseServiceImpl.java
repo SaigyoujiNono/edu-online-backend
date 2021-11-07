@@ -1,6 +1,5 @@
 package com.mqd.eduservice.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,14 +18,13 @@ import com.mqd.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mqd.exception.CustomException;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * <p>
@@ -39,13 +37,13 @@ import java.util.List;
 @Service
 public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse> implements EduCourseService {
 
-    @Autowired
+    @Resource
     private EduCourseDescriptionMapper desMapper;
 
-    @Autowired
+    @Resource
     private EduTeacherMapper teacherMapper;
 
-    @Autowired
+    @Resource
     private EduSubjectMapper subjectMapper;
 
     @Override
@@ -53,7 +51,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public CourseInfoVo saveCourseInfo(CourseInfoVo courseInfo) throws CustomException {
         //先判断老师是否存在
         String teacherId = courseInfo.getTeacherId();
-        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<EduTeacher>();
+        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
         wrapper.eq("id",teacherId);
         Integer teacherCount = teacherMapper.selectCount(wrapper);
         if (teacherCount != 1){
@@ -61,7 +59,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }
 
         //判断课程分类id是否正确
-        QueryWrapper<EduSubject> wrapperSub = new QueryWrapper<EduSubject>();
+        QueryWrapper<EduSubject> wrapperSub = new QueryWrapper<>();
         wrapperSub.eq("id",courseInfo.getSubjectId())
                 .eq("parent_id",courseInfo.getSubjectParentId());
         Integer subCount = subjectMapper.selectCount(wrapperSub);

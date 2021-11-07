@@ -38,7 +38,8 @@ public class EduVideoController {
     @ApiOperation(value = "删除一个小节")
     @DeleteMapping("/video/{id}")
     public Result deleteVideo(@PathVariable String id) throws CustomException {
-        boolean b = videoService.removeById(id);
+        //删除一个小节需要把视频也删除
+        boolean b = videoService.removeVideoAll(id);
         if (b) {
             return Result.ok();
         }

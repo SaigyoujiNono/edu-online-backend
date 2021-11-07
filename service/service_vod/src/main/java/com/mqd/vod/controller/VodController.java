@@ -4,10 +4,10 @@ import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
 import com.mqd.vod.service.VodService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 
 @RestController
@@ -15,7 +15,7 @@ import java.io.IOException;
 @CrossOrigin
 public class VodController {
 
-    @Autowired
+    @Resource
     private VodService vodService;
 
 

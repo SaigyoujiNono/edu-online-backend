@@ -1,6 +1,7 @@
 package com.mqd.eduservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.mqd.eduservice.client.VodClient;
 import com.mqd.eduservice.mapper.EduChapterMapper;
 import com.mqd.eduservice.mapper.EduCourseMapper;
 import com.mqd.eduservice.pojo.EduChapter;
@@ -10,9 +11,12 @@ import com.mqd.eduservice.mapper.EduVideoMapper;
 import com.mqd.eduservice.service.EduVideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mqd.exception.CustomException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mqd.result.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -23,13 +27,17 @@ import org.springframework.util.StringUtils;
  * @since 2021-10-30
  */
 @Service
+@Slf4j
 public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> implements EduVideoService {
 
-    @Autowired
+    @Resource
     private EduCourseMapper courseMapper;
 
-    @Autowired
+    @Resource
     private EduChapterMapper chapterMapper;
+
+    @Resource
+    private VodClient vodClient;
 
     @Override
     public boolean saveVideo(EduVideo video) throws CustomException {
@@ -46,5 +54,22 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         }
         int insert = baseMapper.insert(video);
         return insert > 0;
+    }
+
+    @Override
+    public boolean removeVideoAll(String id) throws CustomException {
+        EduVideo eduVideo = baseMapper.selectById(id);
+        if (eduVideo == null){
+            throw new CustomException("id:"+id+"不存在");
+        }
+        String videoSourceId = eduVideo.getVideoSourceId();
+        if (StringUtils.hasText(videoSourceId)){
+            Result result = vodClient.removeVideo(videoSourceId);
+            if (result.getCode()!=20000){
+                log.warn("视频 "+videoSourceId+" 不存在!");
+            }
+        }
+        int i = baseMapper.deleteById(id);
+        return i > 0;
     }
 }
