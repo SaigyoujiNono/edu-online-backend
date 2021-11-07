@@ -87,6 +87,7 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         Result result = vodClient.removeVideo(eduVideo.getVideoSourceId());
         if (result.getCode()!=20000){
             log.warn("小节:"+ id + result.getMessage());
+            throw new CustomException("小节:"+ id + result.getMessage());
         }
         EduVideo updateVideo = new EduVideo().setId(id).setDuration(0f).
                 setVideoOriginalName("").setVideoSourceId("").setSize(0L);
