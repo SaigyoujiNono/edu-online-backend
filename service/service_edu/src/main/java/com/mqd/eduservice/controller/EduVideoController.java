@@ -46,6 +46,16 @@ public class EduVideoController {
         throw new CustomException("删除失败");
     }
 
+    @ApiOperation(value = "单独删除视频")
+    @DeleteMapping("/videoSingle/{id}")
+    public Result deleteVideoSingle(@PathVariable String id) throws CustomException {
+        boolean flag = videoService.deleteVideoSingle(id);
+        if (flag){
+            return Result.ok();
+        }
+        throw new CustomException("删除失败");
+    }
+
     @ApiOperation(value = "更新一个小节")
     @PutMapping("/video")
     public Result updateVideo(@RequestBody EduVideo video) throws CustomException {

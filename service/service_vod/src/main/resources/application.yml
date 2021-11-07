@@ -4,7 +4,7 @@ spring:
   profiles:
     active: dev
   application:
-    name: service-video
+    name: service-vod
   servlet:
     multipart:
       max-file-size: 100MB

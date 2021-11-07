@@ -72,4 +72,25 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         int i = baseMapper.deleteById(id);
         return i > 0;
     }
+
+    @Override
+    public boolean deleteVideoSingle(String id) throws CustomException {
+        //单独删除视频
+        //先获取视频信息
+        EduVideo eduVideo = baseMapper.selectById(id);
+        if (eduVideo == null) {
+            throw new CustomException("小节 "+ id + "不存在");
+        }
+        if (!StringUtils.hasText(eduVideo.getVideoSourceId())){
+            throw new CustomException("小节 "+ id + "的视频不存在");
+        }
+        Result result = vodClient.removeVideo(eduVideo.getVideoSourceId());
+        if (result.getCode()!=20000){
+            log.warn("小节:"+ id + result.getMessage());
+        }
+        EduVideo updateVideo = new EduVideo().setId(id).setDuration(0f).
+                setVideoOriginalName("").setVideoSourceId("").setSize(0L);
+        int i = baseMapper.updateById(updateVideo);
+        return i>0;
+    }
 }

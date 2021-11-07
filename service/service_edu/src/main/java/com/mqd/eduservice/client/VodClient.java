@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Component
 public interface VodClient {
 
-    @DeleteMapping(value = "/eduvod/video/uploadVideo/{videoId}")
+    @DeleteMapping(value = "/eduvod/video/deleteVideo/{videoId}")
     Result removeVideo(@PathVariable String videoId);
+
 }

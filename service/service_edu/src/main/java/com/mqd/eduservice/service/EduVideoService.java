@@ -18,4 +18,6 @@ public interface EduVideoService extends IService<EduVideo> {
 
     //删除一个小节的同时也删除视频
     boolean removeVideoAll(String id) throws CustomException;
+
+    boolean deleteVideoSingle(String id) throws CustomException;
 }
