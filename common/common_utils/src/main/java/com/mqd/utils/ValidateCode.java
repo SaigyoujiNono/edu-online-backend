@@ -9,7 +9,7 @@ public class ValidateCode {
     public static String getValidate(){
         StringBuilder res = new StringBuilder();
         for (int i = 0; i <6; i++) {
-            res.append(candidateCode[RandomUtils.randomInt(0,candidateCode.length)]);
+            res.append(candidateCode[RandomUtils.randomInt(0,candidateCode.length-1)]);
         }
         return res.toString();
     }
