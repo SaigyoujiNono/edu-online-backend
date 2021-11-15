@@ -17,6 +17,7 @@
         <module>service_vod</module>
         <module>service_cms</module>
         <module>service_user</module>
+        <module>service_email</module>
     </modules>
 
     <properties>
