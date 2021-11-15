@@ -16,6 +16,7 @@
         <module>service_oss</module>
         <module>service_vod</module>
         <module>service_cms</module>
+        <module>service_user</module>
     </modules>
 
     <properties>
@@ -45,6 +46,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
