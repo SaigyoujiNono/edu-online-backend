@@ -1,0 +1,17 @@
+server:
+  port: 8005
+spring:
+  profiles:
+    active: dev
+  mail:
+    host: smtp.office365.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+          ssl:
+            trust: smtp.office365.com
+  application:
+    name: mail-service
