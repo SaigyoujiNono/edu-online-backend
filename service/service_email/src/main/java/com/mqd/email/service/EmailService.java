@@ -3,6 +3,7 @@ package com.mqd.email.service;
 import com.mqd.exception.CustomException;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 public interface EmailService {
 
@@ -15,6 +16,13 @@ public interface EmailService {
      * @param to    要发送的目标地址，也是key
      * @param subject   邮件标题
      * @param valid 验证码
+     * @return  返回需要发送的内容
      */
-    void sendValidByMail(String to, String subject, String valid) throws MessagingException, CustomException;
+    MimeMessage sendValidByMail(String to, String subject, String valid) throws MessagingException, CustomException;
+
+    /**
+     * 异步发送任务
+     * @param mimeMessage   需要发送的内容
+     */
+    void sendMime(MimeMessage mimeMessage);
 }

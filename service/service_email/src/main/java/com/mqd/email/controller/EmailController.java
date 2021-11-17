@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 @RestController
 @RequestMapping("/emailservice")
@@ -25,7 +26,8 @@ public class EmailController {
 
     @GetMapping("/valid/{to}")
     public Result sendValid(@PathVariable String to) throws MessagingException, CustomException {
-        emailService.sendValidByMail(to, "在线教育验证码" , ValidateCode.getValidate());
+        MimeMessage mime = emailService.sendValidByMail(to, "在线教育验证码", ValidateCode.getValidate());
+        emailService.sendMime(mime);
         return Result.ok();
     }
 

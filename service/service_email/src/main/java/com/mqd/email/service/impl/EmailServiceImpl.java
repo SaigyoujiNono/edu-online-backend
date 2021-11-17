@@ -28,15 +28,13 @@ public class EmailServiceImpl implements EmailService {
     private String from;
 
     @Override
-    @Async
-    public void sendValidByMail(String to, String subject, String valid) throws MessagingException, CustomException {
+    public MimeMessage sendValidByMail(String to, String subject, String valid) throws MessagingException, CustomException {
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
         //先获取时间
         Long expire = redisTemplate.getExpire(to);
         if (expire!=null && expire > 840){
-            throw new CustomException("当前不能发送新的验证码，请稍后!");
+            throw new CustomException(to+":当前不能发送新的验证码，请稍后!");
         }
-
         String content = "<span style='font-size:24px;font-weight:600'>验证码为:&nbsp;</span><span style='font-size:24px;" +
                 "font-weight:800'>"+ valid+"</span></br><span style='font-size:24px;font-weight:600'>有效时间为15分钟！</span>";
         MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -45,7 +43,12 @@ public class EmailServiceImpl implements EmailService {
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(content,true);
-        mailSender.send(mimeMessage);
         ops.set(to,valid,15, TimeUnit.MINUTES);
+        return mimeMessage;
+    }
+
+    @Async
+    public void sendMime(MimeMessage mimeMessage){
+        mailSender.send(mimeMessage);
     }
 }
