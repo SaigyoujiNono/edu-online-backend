@@ -15,7 +15,6 @@ public interface EmailService {
      * @param to    要发送的目标地址，也是key
      * @param subject   邮件标题
      * @param valid 验证码
-     * @return  当成功时返回真
      */
-    boolean sendValidByMail(String to, String subject, String valid) throws MessagingException, CustomException;
+    void sendValidByMail(String to, String subject, String valid) throws MessagingException, CustomException;
 }

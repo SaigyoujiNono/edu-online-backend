@@ -25,11 +25,8 @@ public class EmailController {
 
     @GetMapping("/valid/{to}")
     public Result sendValid(@PathVariable String to) throws MessagingException, CustomException {
-        boolean flag = emailService.sendValidByMail(to, "在线教育验证码" , ValidateCode.getValidate());
-        if (flag){
-            return Result.ok();
-        }
-        throw new CustomException("发送失败");
+        emailService.sendValidByMail(to, "在线教育验证码" , ValidateCode.getValidate());
+        return Result.ok();
     }
 
     @GetMapping("/getValid/{email}")

@@ -2,12 +2,12 @@ package com.mqd.email.service.impl;
 
 import com.mqd.email.service.EmailService;
 import com.mqd.exception.CustomException;
-import com.mqd.utils.ValidateCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,7 +28,8 @@ public class EmailServiceImpl implements EmailService {
     private String from;
 
     @Override
-    public boolean sendValidByMail(String to, String subject, String valid) throws MessagingException, CustomException {
+    @Async
+    public void sendValidByMail(String to, String subject, String valid) throws MessagingException, CustomException {
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
         //先获取时间
         Long expire = redisTemplate.getExpire(to);
@@ -46,6 +47,5 @@ public class EmailServiceImpl implements EmailService {
         helper.setText(content,true);
         mailSender.send(mimeMessage);
         ops.set(to,valid,15, TimeUnit.MINUTES);
-        return true;
     }
 }
