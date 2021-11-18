@@ -1,11 +1,14 @@
 package com.mqd.eduuser.controller;
 
 
+import com.mqd.eduuser.pojo.UcenterMember;
 import com.mqd.result.Result;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.mqd.utils.JWTUtils;
+import lombok.Data;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,5 +26,19 @@ public class UcenterMemberController {
     public Result test(){
         return Result.ok().addData("info","test");
     }
+
+    @PostMapping("/login")
+    public Result loginUser(@RequestBody UcenterMember member){
+        Map<String,Object> map = new HashMap<>();
+        map.put("id",member.getId());
+        map.put("nickname",member.getNickname());
+        String jwt = JWTUtils.createJWT(map);
+        return Result.ok().addData("token",jwt);
+    }
+
+//    @GetMapping("/info")
+//    public Result infoUser(@RequestAttribute String token){
+//
+//    }
 }
 
