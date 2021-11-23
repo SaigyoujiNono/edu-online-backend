@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -24,21 +25,20 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/cmsservice/banner")
 @CrossOrigin
-public class CrmBannerController {
+public class BannerFrontController {
 
     @Resource
     private CrmBannerService bannerService;
 
-    @ApiOperation(value = "条件查询banner+分页")
+    @ApiOperation(value = "首页显示banner，查询排序在100以上的所有banner")
     @GetMapping("/banner/home")
     public Result getBanner(){
-        IPage<CrmBanner> page = new Page<>(1, 8);
         QueryWrapper<CrmBanner> bannerQuery = new QueryWrapper<>();
-        bannerQuery.ge("sort","20");
+        bannerQuery.ge("sort","100");
         //选择前8个sort大于20的banner
         bannerQuery.orderByDesc("sort");
-        page = bannerService.page(page, bannerQuery);
-        return Result.ok().addData("bannerList",page.getRecords());
+        List<CrmBanner> list = bannerService.list(bannerQuery);
+        return Result.ok().addData("bannerList",list);
     }
 
 
