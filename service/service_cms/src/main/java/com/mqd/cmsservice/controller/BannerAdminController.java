@@ -84,9 +84,19 @@ public class BannerAdminController {
         return Result.ok().addData("bannerList",page.getRecords());
     }
 
+    @ApiOperation(value = "根据id获取单个banner信息")
+    @GetMapping("/banner/{id}")
+    public Result getBannerById(@PathVariable String id) throws CustomException {
+        CrmBanner byId = bannerService.getById(id);
+        if (byId == null) {
+            throw new CustomException("id不存在");
+        }
+        return Result.ok().addData("bannerInfo",byId);
+    }
+
     @ApiOperation(value = "通过id来删除banner")
     @DeleteMapping("/banner/{id}")
-    public Result deleteBanner(@PathVariable Integer id) throws CustomException {
+    public Result deleteBanner(@PathVariable String id) throws CustomException {
         boolean b = bannerService.removeById(id);
         if (b){
             return Result.ok();
@@ -96,7 +106,7 @@ public class BannerAdminController {
 
     @ApiOperation(value = "通过id来修改banner信息")
     @PutMapping("/banner")
-    public Result updateBanner(CrmBanner banner) throws CustomException {
+    public Result updateBanner(@RequestBody CrmBanner banner) throws CustomException {
         boolean b = bannerService.updateById(banner);
         if (b){
             return Result.ok();
@@ -106,7 +116,7 @@ public class BannerAdminController {
 
     @ApiOperation(value = "添加一个banner信息")
     @PostMapping("/banner")
-    public Result addBanner(CrmBanner banner) throws CustomException {
+    public Result addBanner(@RequestBody CrmBanner banner) throws CustomException {
         boolean b = bannerService.save(banner);
         if (b){
             return Result.ok();
