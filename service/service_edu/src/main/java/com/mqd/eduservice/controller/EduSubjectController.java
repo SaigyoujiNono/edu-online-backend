@@ -4,6 +4,7 @@ package com.mqd.eduservice.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mqd.eduservice.pojo.EduSubject;
 import com.mqd.eduservice.pojo.vo.SubjectQuery;
+import com.mqd.eduservice.service.EduCourseService;
 import com.mqd.eduservice.service.EduSubjectService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
@@ -57,7 +58,7 @@ public class EduSubjectController {
         return Result.ok().addData("primarySubList",list);
     }
 
-    @ApiOperation(value = "根据id删除一个小节")
+    @ApiOperation(value = "根据id删除一个分类")
     @DeleteMapping("/subject/{id}")
     public Result delSubject(@PathVariable String id) throws CustomException {
         if (subjectService.delSubject(id)){

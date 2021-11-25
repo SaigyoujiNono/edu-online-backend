@@ -47,6 +47,16 @@ public class EduCourseController {
         CourseInfoVo courseInfoVo = courseService.saveCourseInfo(courseInfo);
         return Result.ok().addData("courseInfo",courseInfoVo);
     }
+    @ApiOperation(value = "根据id删除一个课程")
+    @DeleteMapping("/courseInfo/{id}")
+    public Result delCourse(@PathVariable String id) throws CustomException {
+        boolean b = courseService.removeById(id);
+        if (b){
+            return Result.ok();
+        }
+        throw new CustomException("删除失败");
+    }
+
 
     @ApiOperation(value = "更新课程基本信息")
     @PutMapping("/courseInfo")
