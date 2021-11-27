@@ -108,7 +108,7 @@
                 <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
                 <version>${hystrix.version}</version>
             </dependency>
-
+            <!-- 阿里云sdk -->
             <dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-sdk-vod-upload</artifactId>
@@ -149,7 +149,7 @@
                 <artifactId>gson</artifactId>
                 <version>2.8.2</version>
             </dependency>
-
+            <!-- redis连接 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -159,6 +159,24 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
                 <version>2.9.0</version>
+            </dependency>
+            <!--  jwt工具类  -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>0.11.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>0.11.2</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if Gson is preferred -->
+                <version>0.11.2</version>
+                <scope>runtime</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
