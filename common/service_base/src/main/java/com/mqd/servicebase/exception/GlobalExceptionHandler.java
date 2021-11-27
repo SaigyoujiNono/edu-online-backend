@@ -2,12 +2,13 @@ package com.mqd.servicebase.exception;
 
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
-import com.mqd.result.Status;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Objects;
 
 /**
  * 统一异常处理器
@@ -23,6 +24,12 @@ public class GlobalExceptionHandler {
         return Result.failed().setMessage(e.getMessage());
     }
 
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    public Result error(BindException e){
+        log.error(e.getMessage());
+        return Result.failed().setMessage(Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage());
+    }
 
     @ExceptionHandler({Exception.class})
     @ResponseBody

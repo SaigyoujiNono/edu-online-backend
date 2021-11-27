@@ -12,5 +12,4 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-11-15
  */
 public interface UcenterMemberService extends IService<UcenterMember> {
-
 }

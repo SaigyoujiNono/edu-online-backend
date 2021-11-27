@@ -11,6 +11,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * <p>
  * 会员表
@@ -36,9 +41,12 @@ public class UcenterMember implements Serializable {
     @ApiModelProperty(value = "手机号")
     private String mobile;
 
+    @NotBlank
+    @Size(min = 6,max = 16,message = "密码必须为6-16位")
     @ApiModelProperty(value = "密码")
     private String password;
 
+    @NotBlank(message = "昵称不能为空")
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
@@ -69,6 +77,7 @@ public class UcenterMember implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 
+    @Email(message = "请输入正确的邮箱地址")
     @ApiModelProperty(value = "用户邮箱")
     private String email;
 
