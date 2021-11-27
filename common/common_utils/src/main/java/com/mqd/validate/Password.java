@@ -8,13 +8,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 手机号码校验
+ * 密码校验
  */
 @Target({ ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PhoneNoConstraintValidator.class)
-public @interface PhoneNoConstraint {
-    String message() default "手机号码格式错误";
+@Constraint(validatedBy = PasswordConstraintValidator.class)
+public @interface Password {
+    String message() default "密码格式不正确，需要大小写字母与数字组合";
 
     Class<?>[] groups() default {};
 

@@ -6,15 +6,13 @@ import java.util.Date;
 
 import java.io.Serializable;
 
+import com.mqd.validate.PhoneNoConstraint;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 /**
  * <p>
@@ -38,6 +36,7 @@ public class UcenterMember implements Serializable {
     @ApiModelProperty(value = "微信openid")
     private String openid;
 
+    @PhoneNoConstraint
     @ApiModelProperty(value = "手机号")
     private String mobile;
 
