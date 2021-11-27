@@ -2,6 +2,9 @@ package com.mqd.cmsservice.service;
 
 import com.mqd.cmsservice.pojo.CrmBanner;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mqd.exception.CustomException;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-11-08
  */
 public interface CrmBannerService extends IService<CrmBanner> {
-
+    List<CrmBanner> getHomeBanner() throws CustomException;
 }

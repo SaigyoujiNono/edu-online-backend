@@ -32,21 +32,7 @@ public class HomeController {
     @ApiOperation(value="获取9条热门课程数据和6条讲师数据",notes = "获取9条根据观看量排序热门课程数据，6条根据sort字段排序的讲师数据")
     @GetMapping("/home")
     public Result getHomeData(){
-        // 获取9条课程数据
-        QueryWrapper<EduCourse> courseQuery = new QueryWrapper<>();
-        IPage<EduCourse> coursePage = new Page<>(1,9);
-        courseQuery.eq("status","Normal")   //获取已发布的
-                .orderByDesc("view_count");
-        courseService.page(coursePage, courseQuery);
-        //获取6条讲师数据
-        QueryWrapper<EduTeacher> teacherQuery = new QueryWrapper<>();
-        IPage<EduTeacher> teacherPage = new Page<>(1,6);
-        courseQuery.orderByDesc("sort");
-        teacherService.page(teacherPage, teacherQuery);
-        //最终返回
-        return Result.ok().addData("hotCourse",coursePage.getRecords())
-                .addData("hotTeacher",teacherPage.getRecords());
+        return Result.ok().addData("hotCourse",courseService.getHotCourse())
+                .addData("hotTeacher",teacherService.getHotTeacher());
     }
-
-
 }

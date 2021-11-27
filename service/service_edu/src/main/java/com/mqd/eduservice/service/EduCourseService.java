@@ -28,4 +28,10 @@ public interface EduCourseService extends IService<EduCourse> {
     CourseInfoDto getBeforePublishCourse(String id);
 
     IPage<CourseInfoDto> getCourseListByQuery(CourseQuery query, Page<CourseInfoDto> page);
+
+    /**
+     * 获取热门课程，根据播放量降序排序
+     * @return  返回9条数据
+     */
+    List<EduCourse> getHotCourse();
 }

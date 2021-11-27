@@ -18,6 +18,7 @@ import com.mqd.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mqd.exception.CustomException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -25,6 +26,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -173,6 +175,17 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             queryWrapper.eq("status",status);
         }
         return baseMapper.getCourseListByQuery(page, queryWrapper);
+    }
+
+    @Cacheable(key = "'hotCourse'",value = "home")
+    @Override
+    public List<EduCourse> getHotCourse() {
+        QueryWrapper<EduCourse> courseQuery = new QueryWrapper<>();
+        IPage<EduCourse> coursePage = new Page<>(1,9);
+        courseQuery.eq("status","Normal")   //获取已发布的
+                .orderByDesc("view_count");
+        baseMapper.selectPage(coursePage, courseQuery);
+        return coursePage.getRecords();
     }
 
 }
