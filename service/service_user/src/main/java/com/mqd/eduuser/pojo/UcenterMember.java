@@ -6,6 +6,7 @@ import java.util.Date;
 
 import java.io.Serializable;
 
+import com.mqd.validate.Password;
 import com.mqd.validate.PhoneNoConstraint;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -42,6 +43,7 @@ public class UcenterMember implements Serializable {
 
     @NotBlank
     @Size(min = 6,max = 16,message = "密码必须为6-16位")
+    @Password
     @ApiModelProperty(value = "密码")
     private String password;
 
@@ -79,6 +81,5 @@ public class UcenterMember implements Serializable {
     @Email(message = "请输入正确的邮箱地址")
     @ApiModelProperty(value = "用户邮箱")
     private String email;
-
 
 }
