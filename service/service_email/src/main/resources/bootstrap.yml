@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: service-mail
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.196.195:9989
+        file-extension: yaml
+        namespace: nacos_dev
+        enabled: true
+        extension-configs:
+          - dataId: discovery.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+
+          - dataId: redis.yaml
+            group: DEFAULT_GROUP
+            refresh: true
