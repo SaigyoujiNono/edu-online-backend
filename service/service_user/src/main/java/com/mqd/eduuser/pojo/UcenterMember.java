@@ -6,6 +6,7 @@ import java.util.Date;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mqd.validate.Password;
 import com.mqd.validate.PhoneNoConstraint;
 import io.swagger.annotations.ApiModel;
@@ -26,6 +27,7 @@ import javax.validation.constraints.*;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="UcenterMember对象", description="会员表")
+@JsonInclude(JsonInclude.Include.NON_NULL)// 当字段为空时不参与序列化
 public class UcenterMember implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +49,6 @@ public class UcenterMember implements Serializable {
     @ApiModelProperty(value = "密码")
     private String password;
 
-    @NotBlank(message = "昵称不能为空")
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
@@ -79,6 +80,7 @@ public class UcenterMember implements Serializable {
     private Date gmtModified;
 
     @Email(message = "请输入正确的邮箱地址")
+    @NotBlank(message = "邮箱不能为空")
     @ApiModelProperty(value = "用户邮箱")
     private String email;
 
