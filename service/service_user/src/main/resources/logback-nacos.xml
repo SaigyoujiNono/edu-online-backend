@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds">
-    <!-- 都说spring boot使用日志需要引入这个，但是我引入了之后总是打印两份日志，所以我去除了，并不影响使用 -->
+    <contextName>nacos</contextName>
     <!-- <include resource="org/springframework/boot/logging/logback/base.xml"/> -->
+    <springProperty scope="context" name="LOG_PATH" source="logging.file.path"/>
+    <springProperty scope="context" name="FILE_NAME" source="spring.application.name"/>
+
+    <property name="STDOUT_PATTERN"
+              value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) |%highlight(%-5level) |%blue(%thread) |%blue(%file:%line) |%green(%logger) |%cyan(%msg%n)"/>
+    <property name="FILE_PATTERN"
+              value="%date{yyyy-MM-dd HH:mm:ss} |%-5level |%thread |%file:%line |%logger |%msg%n"/>
+
     <!-- 控制台设置 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <pattern>${STDOUT_PATTERN}</pattern>
         </encoder>
     </appender>
     <!-- INFO -->
     <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
             它的配置对应application.properties里的logging.path值-->
-        <file>${LOG_PATH}/info/info.log</file>
+        <file>${LOG_PATH}/${FILE_NAME}/info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
-            <fileNamePattern>info/info-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>info-%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <pattern>${FILE_PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
@@ -33,15 +41,15 @@
     <appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
             它的配置对应application.properties里的logging.path值-->
-        <file>${LOG_PATH}/debug/debug.log</file>
+        <file>${LOG_PATH}/${FILE_NAME}/debug.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
-            <fileNamePattern>debug/debug-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>debug-%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <pattern>${FILE_PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>DEBUG</level>
@@ -53,16 +61,16 @@
     <appender name="warnAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
             它的配置对应application.properties里的logging.path值-->
-        <file>${LOG_PATH}/warn/warn.log</file>
+        <file>${LOG_PATH}/${FILE_NAME}/warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
-            <fileNamePattern>warn/warn-%d{yyyy-MM-dd}.log
+            <fileNamePattern>warn-%d{yyyy-MM-dd}.log
             </fileNamePattern>
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <pattern>${FILE_PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>WARN</level>
@@ -75,15 +83,15 @@
     <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
             它的配置对应application.properties里的logging.path值-->
-        <file>${LOG_PATH}/error/error.log</file>
+        <file>${LOG_PATH}/${FILE_NAME}/error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
-            <fileNamePattern>error/error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>error-%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <pattern>${FILE_PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>

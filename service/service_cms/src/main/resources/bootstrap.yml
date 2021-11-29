@@ -20,11 +20,3 @@ spring:
           - dataId: discovery.yaml
             group: DEFAULT_GROUP
             refresh: true
-logging:
-  level:
-    root: INFO
-  pattern:
-    console: '%yellow(%date{yyyy-MM-dd HH:mm:ss}) |%highlight(%-5level) |%blue(%thread) |%blue(%file:%line) |%green(%logger) |%cyan(%msg%n)'
-    file: '%date{yyyy-MM-dd HH:mm:ss} |%-5level |%thread |%file:%line |%logger |%msg%n'
-  file:
-    path: ./log
