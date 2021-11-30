@@ -1,6 +1,6 @@
 spring:
   application:
-    name: getway-api
+    name: gateway-api
   cloud:
     nacos:
       config:

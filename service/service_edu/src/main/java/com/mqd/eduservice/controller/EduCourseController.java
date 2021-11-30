@@ -31,8 +31,7 @@ import java.util.Map;
  * @since 2021-10-24
  */
 @RestController
-@RequestMapping("/eduservice/course")
-@CrossOrigin
+@RequestMapping("/api/edu/admin")
 public class EduCourseController {
 
     @Resource
@@ -47,6 +46,7 @@ public class EduCourseController {
         CourseInfoVo courseInfoVo = courseService.saveCourseInfo(courseInfo);
         return Result.ok().addData("courseInfo",courseInfoVo);
     }
+
     @ApiOperation(value = "根据id删除一个课程")
     @DeleteMapping("/courseInfo/{id}")
     public Result delCourse(@PathVariable String id) throws CustomException {
@@ -56,7 +56,6 @@ public class EduCourseController {
         }
         throw new CustomException("删除失败");
     }
-
 
     @ApiOperation(value = "更新课程基本信息")
     @PutMapping("/courseInfo")
@@ -91,7 +90,7 @@ public class EduCourseController {
     }
 
     @ApiOperation(value = "发布课程接口",notes = "isPub为1时则发布课程，isPub为0时取消发布")
-    @PutMapping("/publish/{isPub}/{id}")
+    @PutMapping("/publishCourse/{isPub}/{id}")
     public Result publishCourse(@PathVariable Integer isPub, @PathVariable String id) throws CustomException {
         EduCourse byId = courseService.getById(id);
         if (byId==null){
@@ -109,7 +108,7 @@ public class EduCourseController {
     }
 
     @ApiOperation(value = "获取课程列表的接口，每页10条信息，可以传入查询参数",notes = "page表示当前页")
-    @GetMapping("/getCourseList")
+    @GetMapping("/course")
     public Result getCourseList(Long current, Long pageSize, CourseQuery courseQuery) {
         Page<CourseInfoDto> pageInfo = new Page<>(1,10);
         if (current != null){

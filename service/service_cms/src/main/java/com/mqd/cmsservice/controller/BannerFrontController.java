@@ -24,8 +24,7 @@ import java.util.List;
  * @since 2021-11-08
  */
 @RestController
-@RequestMapping("/cmsservice/banner")
-@CrossOrigin
+@RequestMapping("/api/cms/service")
 public class BannerFrontController {
 
     @Resource

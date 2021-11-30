@@ -20,8 +20,7 @@ import javax.annotation.Resource;
  * 首页数据展示
  */
 @RestController
-@RequestMapping("/eduservice/home")
-@CrossOrigin
+@RequestMapping("/api/edu/service")
 public class HomeController {
     @Resource
     private EduTeacherService teacherService;

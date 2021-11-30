@@ -12,8 +12,7 @@ import java.io.IOException;
 
 @Api(tags = "文件上传")
 @RestController
-@RequestMapping(("/oss/file"))
-@CrossOrigin
+@RequestMapping("/api/oss/file")
 public class OssController {
 
     @Resource

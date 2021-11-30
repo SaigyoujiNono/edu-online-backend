@@ -30,8 +30,7 @@ import java.util.Map;
  */
 @Api(tags = "老师管理")
 @RestController
-@RequestMapping("/eduservice/teacher")
-@CrossOrigin
+@RequestMapping("/api/edu/admin")
 public class EduTeacherController {
 
     @Resource

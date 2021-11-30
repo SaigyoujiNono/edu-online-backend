@@ -3,19 +3,21 @@ package com.mqd.eduservice.controller;
 import com.mqd.result.Result;
 import com.mqd.result.Status;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/eduservice")
-@CrossOrigin
+@RequestMapping("/api/edu/admin")
+@Slf4j
 public class LoginController {
 
     @ApiOperation(value = "登录接口")
     @PostMapping("/user/login")
     public Result login(@RequestBody String username){
+        log.info(username + ":登录");
         return Result.ok().setCode(Status.OK)
                 .addData("token","admin-token");
     }
@@ -23,6 +25,7 @@ public class LoginController {
     @ApiOperation(value = "获取登录用户信息")
     @GetMapping("/user/info")
     public Result getInfo(String token){
+        log.info(token + ":获取信息");
         List<String> roles = new ArrayList<>();
         roles.add("admin");
         return Result.ok().setCode(Status.OK)

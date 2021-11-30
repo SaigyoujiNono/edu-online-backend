@@ -25,8 +25,7 @@ import java.util.List;
  * @since 2021-10-24
  */
 @RestController
-@RequestMapping("/eduservice/chapter")
-@CrossOrigin
+@RequestMapping("/api/edu/admin")
 public class EduChapterController {
 
     @Resource
@@ -71,7 +70,6 @@ public class EduChapterController {
         }
         throw new CustomException("更新失败");
     }
-
 
     @ApiOperation(value = "获取所有章节和小节", notes = "获取所有章节和小节,id为课程的id")
     @GetMapping("/chapter/{id}")

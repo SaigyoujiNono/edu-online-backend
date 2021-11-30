@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * @since 2021-11-15
  */
 @RestController
-@RequestMapping("/eduuser/member")
+@RequestMapping("/api/user/service")
 public class UcenterMemberController {
 
     @Resource

@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
 /**
  * <p>
  * 课程视频 前端控制器
@@ -18,10 +20,9 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-10-30
  */
 @RestController
-@RequestMapping("/eduservice/video")
-@CrossOrigin
+@RequestMapping("/api/edu/admin")
 public class EduVideoController {
-    @Autowired
+    @Resource
     private EduVideoService videoService;
 
 

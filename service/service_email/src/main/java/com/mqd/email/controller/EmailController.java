@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.validation.constraints.Null;
 import java.util.regex.Pattern;
 
 @RestController
-@RequestMapping("/emailservice")
+@RequestMapping("/api/email/service")
 @Slf4j
 public class EmailController {
     @Resource

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: service-mail
+    name: service-email
   cloud:
     nacos:
       config:

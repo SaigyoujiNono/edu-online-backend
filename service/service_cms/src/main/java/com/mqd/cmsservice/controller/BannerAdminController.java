@@ -21,8 +21,7 @@ import java.util.Date;
  */
 @Api("banner管理")
 @RestController
-@RequestMapping("/cmsservice/banner")
-@CrossOrigin
+@RequestMapping("/api/cms/admin")
 public class BannerAdminController {
 
     @Resource
