@@ -23,7 +23,7 @@
         <file>${LOG_PATH}/${FILE_NAME}/info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
-            <fileNamePattern>info-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/${FILE_NAME}/info-%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -44,7 +44,7 @@
         <file>${LOG_PATH}/${FILE_NAME}/debug.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
-            <fileNamePattern>debug-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/${FILE_NAME}/debug-%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -64,8 +64,7 @@
         <file>${LOG_PATH}/${FILE_NAME}/warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
-            <fileNamePattern>warn-%d{yyyy-MM-dd}.log
-            </fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/${FILE_NAME}/warn-%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -86,7 +85,7 @@
         <file>${LOG_PATH}/${FILE_NAME}/error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
-            <fileNamePattern>error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/${FILE_NAME}/error-%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
