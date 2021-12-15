@@ -18,6 +18,7 @@ import javax.validation.constraints.Email;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -38,22 +39,25 @@ public class UcenterMemberController {
     @Resource
     private RedisTemplate<String,Object> redisTemplate;
 
+    @ApiOperation(value = "用户登录",notes = "可以直接输入邮箱或者手机号码")
     @PostMapping("/login")
     public Result loginUser(@RequestBody Map<String,String> user) throws CustomException {
         String username = user.get("username");
         String password = user.get("password");
         String regex = "[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?";
-        Pattern compile = Pattern.compile(regex);
+        String phoneRegex = "1\\d{10}";
         UcenterMember member;
         // 如果是邮箱
-        if (compile.matcher(username).matches()){
+        if (Pattern.compile(regex).matcher(username).matches()){
             member = memberService.loginByEmail(username, password);
-        }else{
-            //不是邮箱则是手机号
+        }else if (Pattern.compile(phoneRegex).matcher(username).matches()){
+            //手机号
             member = memberService.loginByMobile(username, password);
+        }else {
+            throw new CustomException("账号格式不正确");
         }
         if (member != null){
-            return createJwtSource(member);
+            return Result.ok().addData("token",createJwtSource(member));
         }
         throw new CustomException("登录失败");
     }
@@ -63,7 +67,7 @@ public class UcenterMemberController {
     public Result registerUser(@Validated @RequestBody UcenterMember member) throws CustomException {
         UcenterMember register = memberService.register(member);
         if (register!=null){
-            return createJwtSource(register);
+            return Result.ok().addData("token",createJwtSource(register));
         }
         throw new CustomException("注册失败");
     }
@@ -90,14 +94,13 @@ public class UcenterMemberController {
     /**
      * 将member包装返回
      * @param member    会员信息
-     * @return  返回一个包装好的result
+     * @return  返回jwt
      */
-    public Result createJwtSource(UcenterMember member){
+    public String createJwtSource(UcenterMember member){
         //生成jwt
         Map<String,Object> map = new HashMap<>();
         map.put("id",member.getId());
-        String jwt = JWTUtils.createJWT(map);
-        return Result.ok().addData("token",jwt).addData("userInfo",member);
+        return JWTUtils.createJWT(map);
     }
 }
 
