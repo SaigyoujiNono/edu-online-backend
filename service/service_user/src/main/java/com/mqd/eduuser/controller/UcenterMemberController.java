@@ -2,23 +2,22 @@ package com.mqd.eduuser.controller;
 
 
 import com.mqd.eduuser.pojo.UcenterMember;
+import com.mqd.eduuser.pojo.vo.MemberVo;
 import com.mqd.eduuser.service.UcenterMemberService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
 import com.mqd.utils.JWTUtils;
-import com.mqd.validate.PhoneNoConstraint;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.Email;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -64,9 +63,21 @@ public class UcenterMemberController {
 
     @ApiOperation(value = "用户注册")
     @PostMapping("/register")
-    public Result registerUser(@Validated @RequestBody UcenterMember member) throws CustomException {
-        UcenterMember register = memberService.register(member);
+    public Result registerUser(@Validated @RequestBody MemberVo member) throws CustomException {
+        //两次密码不一致
+        if (!member.getPassword().equals(member.getConfirmPassword())) {
+            throw new CustomException("密码不一致");
+        }
+        //先到redis确认是否有验证码
+        String valid = (String)redisTemplate.opsForValue().get("code::" + member.getEmail());
+        if (!member.getValidateCode().equals(valid)){
+            throw new CustomException("验证码不一致");
+        }
+        UcenterMember register = new UcenterMember();
+        BeanUtils.copyProperties(member,register);
+        register = memberService.register(register);
         if (register!=null){
+            redisTemplate.delete("code::"+member.getEmail());
             return Result.ok().addData("token",createJwtSource(register));
         }
         throw new CustomException("注册失败");
