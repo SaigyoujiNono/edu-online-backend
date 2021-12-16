@@ -16,6 +16,6 @@ public class PageInfo {
         this.pages = page.getPages();
         this.size = page.getSize();
         this.total = page.getTotal();
-        this.pages = page.getPages();
+        this.current = page.getCurrent();
     }
 }
