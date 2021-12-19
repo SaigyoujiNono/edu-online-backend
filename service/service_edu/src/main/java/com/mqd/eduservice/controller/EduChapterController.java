@@ -9,6 +9,7 @@ import com.mqd.eduservice.service.EduChapterService;
 import com.mqd.eduservice.service.EduVideoService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ import java.util.List;
  * @author mqd
  * @since 2021-10-24
  */
+@Api(tags = "课程章节管理")
 @RestController
 @RequestMapping("/api/edu/admin")
 public class EduChapterController {

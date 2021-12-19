@@ -10,6 +10,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * <p>
  * 讲师
@@ -29,18 +32,26 @@ public class EduTeacher implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
+    @NotBlank
+    @Size(min = 2,max = 20,message = "字符长度必须在2-20")
     @ApiModelProperty(value = "讲师姓名")
     private String name;
 
+    @NotBlank
+    @Size(min = 3,max = 500,message = "字符长度必须在3-500")
     @ApiModelProperty(value = "讲师简介")
     private String intro;
 
+    @NotBlank
+    @Size(max = 500,message = "字符长度必须在1-500")
     @ApiModelProperty(value = "讲师资历,一句话说明讲师")
     private String career;
 
+    @NotBlank
     @ApiModelProperty(value = "头衔 1高级讲师 2首席讲师")
     private Integer level;
 
+    @NotBlank
     @ApiModelProperty(value = "讲师头像")
     private String avatar;
 

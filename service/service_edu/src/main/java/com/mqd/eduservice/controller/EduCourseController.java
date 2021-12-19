@@ -12,6 +12,7 @@ import com.mqd.eduservice.service.EduCourseDescriptionService;
 import com.mqd.eduservice.service.EduCourseService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
@@ -30,6 +31,7 @@ import java.util.Map;
  * @author mqd
  * @since 2021-10-24
  */
+@Api(tags = "课程信息管理")
 @RestController
 @RequestMapping("/api/edu/admin")
 public class EduCourseController {

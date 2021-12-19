@@ -12,7 +12,7 @@ public class PhoneNoConstraintValidator implements ConstraintValidator<PhoneNoCo
         if (value == null || value.length() == 0){
             return true;
         }
-        String regex = "1\\d{10}";
+        String regex = "0?(13|14|15|17|18|19)[0-9]{9}";
         Pattern compile = Pattern.compile(regex);
         Matcher matcher = compile.matcher(value);
         return matcher.matches();

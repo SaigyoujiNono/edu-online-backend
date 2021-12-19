@@ -8,6 +8,7 @@ import com.mqd.eduservice.service.EduCourseService;
 import com.mqd.eduservice.service.EduSubjectService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ import java.util.List;
  * @author mqd
  * @since 2021-10-23
  */
+@Api(tags = "课程分类管理")
 @RestController
 @RequestMapping("/api/edu/admin")
 public class EduSubjectController {

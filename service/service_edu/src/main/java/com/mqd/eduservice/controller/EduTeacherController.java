@@ -12,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -28,7 +29,7 @@ import java.util.Map;
  * @author mqd
  * @since 2021-10-12
  */
-@Api(tags = "老师管理")
+@Api(tags = "教师管理")
 @RestController
 @RequestMapping("/api/edu/admin")
 public class EduTeacherController {
@@ -82,9 +83,9 @@ public class EduTeacherController {
         wrapper.orderByDesc("gmt_create");
 
         Page<EduTeacher> pageRes = eduTeacherService.page(pages, wrapper);
-        if (pageRes.getCurrent()>pageRes.getPages()){
-            throw new CustomException("当前页数大于总页数!");
-        }
+//        if (pageRes.getCurrent()>pageRes.getPages()){
+//            throw new CustomException("当前页数大于总页数!");
+//        }
         resMap.put("teachers",pageRes.getRecords());
         resMap.put("pages",pageRes.getPages());
         resMap.put("total", pageRes.getTotal());
@@ -106,12 +107,12 @@ public class EduTeacherController {
         return Result.ok().addData("teacherList",list);
     }
 
-    @ApiOperation(value = "新增一个老师", notes = "查询所有老师信息。")
+    @ApiOperation(value = "新增一个老师", notes = "新增教师信息。")
     @PostMapping(value = "/teacher")
-    public Result addTeacher(@RequestBody EduTeacher teacher) throws CustomException {
+    public Result addTeacher(@RequestBody @Validated EduTeacher teacher) throws CustomException {
         System.out.println(teacher);
         if (teacher.getId()!=null || teacher.getIsDeleted()!=null || teacher.getGmtCreate()!=null ||
-        teacher.getGmtModified()!=null){
+        teacher.getGmtModified()!=null || !StringUtils.hasText(teacher.getName())){
             throw new CustomException("添加参数不正确!");
         }
         boolean save = eduTeacherService.save(teacher);
@@ -125,6 +126,9 @@ public class EduTeacherController {
     @ApiOperation(value = "根据id删除老师")
     @DeleteMapping("/teacher/{id}")
     public Result removeTeacher(@PathVariable String id) throws CustomException {
+        if (!StringUtils.hasText(id)) {
+            throw new CustomException("必须输入id");
+        }
         boolean remove = eduTeacherService.removeById(id);
         if (remove){
             return Result.ok();
@@ -135,7 +139,7 @@ public class EduTeacherController {
 
     @ApiOperation(value = "根据id更新老师信息")
     @PutMapping("/teacher")
-    public Result updateTeacher(@RequestBody EduTeacher teacher) throws CustomException {
+    public Result updateTeacher(@RequestBody @Validated EduTeacher teacher) throws CustomException {
         boolean flag = eduTeacherService.updateById(teacher);
         if (flag){
             return Result.ok();

@@ -5,6 +5,7 @@ import com.mqd.eduservice.pojo.EduVideo;
 import com.mqd.eduservice.service.EduVideoService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
  * @author mqd
  * @since 2021-10-30
  */
+@Api(tags = "视频管理")
 @RestController
 @RequestMapping("/api/edu/admin")
 public class EduVideoController {

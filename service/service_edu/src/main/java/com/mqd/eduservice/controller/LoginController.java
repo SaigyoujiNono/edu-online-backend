@@ -2,6 +2,7 @@ package com.mqd.eduservice.controller;
 
 import com.mqd.result.Result;
 import com.mqd.result.Status;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Api(tags = "管理登录接口")
 @RestController
 @RequestMapping("/api/edu/admin")
 @Slf4j

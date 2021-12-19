@@ -8,6 +8,7 @@ import com.mqd.eduservice.pojo.EduTeacher;
 import com.mqd.eduservice.service.EduCourseService;
 import com.mqd.eduservice.service.EduTeacherService;
 import com.mqd.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
 /**
  * 首页数据展示
  */
+@Api(tags = "前台首页api")
 @RestController
 @RequestMapping("/api/edu/service")
 public class HomeController {

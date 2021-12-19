@@ -5,6 +5,7 @@ import com.mqd.eduservice.pojo.EduSubject;
 import com.mqd.eduservice.service.EduSubjectService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import java.util.List;
 /**
  * 分类获取
  */
+@Api(tags = "前台分类api")
 @RestController
 @RequestMapping("/api/edu/service")
 public class UserSubjectController {
