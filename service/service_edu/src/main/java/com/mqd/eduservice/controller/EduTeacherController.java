@@ -111,9 +111,9 @@ public class EduTeacherController {
     @PostMapping(value = "/teacher")
     public Result addTeacher(@RequestBody @Validated EduTeacher teacher) throws CustomException {
         System.out.println(teacher);
-        if (teacher.getId()!=null || teacher.getIsDeleted()!=null || teacher.getGmtCreate()!=null ||
+        if (StringUtils.hasText(teacher.getId()) || teacher.getIsDeleted()!=null || teacher.getGmtCreate()!=null ||
         teacher.getGmtModified()!=null || !StringUtils.hasText(teacher.getName())){
-            throw new CustomException("添加参数不正确!");
+            throw new CustomException("参数不正确!");
         }
         boolean save = eduTeacherService.save(teacher);
         if (save){
@@ -140,6 +140,10 @@ public class EduTeacherController {
     @ApiOperation(value = "根据id更新老师信息")
     @PutMapping("/teacher")
     public Result updateTeacher(@RequestBody @Validated EduTeacher teacher) throws CustomException {
+        if (StringUtils.hasText(teacher.getId()) || teacher.getIsDeleted()!=null || teacher.getGmtCreate()!=null ||
+                teacher.getGmtModified()!=null || !StringUtils.hasText(teacher.getName())){
+            throw new CustomException("参数不正确!");
+        }
         boolean flag = eduTeacherService.updateById(teacher);
         if (flag){
             return Result.ok();
