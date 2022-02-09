@@ -61,6 +61,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
                 .setDuration(c.getDuration())
                 .setPlayCount(c.getPlayCount())
                 .setSize(c.getSize())
-                .setStatus(c.getStatus());
+                .setStatus(c.getStatus())
+                .setCourseId(c.getCourseId());
     }
 }

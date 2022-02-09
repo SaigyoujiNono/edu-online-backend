@@ -5,6 +5,7 @@ import com.mqd.result.Result;
 import com.mqd.vod.service.VodService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +41,16 @@ public class VodController {
             return Result.ok();
         }
         throw new CustomException("视频删除失败");
+    }
+
+    @ApiOperation(value = "根据视频id获取视频播放凭证")
+    @GetMapping("/video/{id}")
+    public Result getAliyunVideoAuth(@PathVariable String id) throws CustomException {
+        String auth = vodService.getPlayAuthById(id);
+        if (StringUtils.hasText(auth)){
+            return Result.ok().addData("auth",auth);
+        }
+        throw new CustomException("视频播放凭证获取失败");
     }
 
 

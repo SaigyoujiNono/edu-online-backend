@@ -10,4 +10,7 @@ public interface VodService {
 
     //删除视频
     Boolean deleteVideo(String id);
+
+    //获取视频播放凭证
+    String getPlayAuthById(String id);
 }

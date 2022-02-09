@@ -5,17 +5,22 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mqd.eduservice.pojo.EduCourse;
 import com.mqd.eduservice.pojo.EduCourseDescription;
+import com.mqd.eduservice.pojo.EduTeacher;
 import com.mqd.eduservice.pojo.vo.ChapterInfoVo;
+import com.mqd.eduservice.pojo.vo.CourseFront;
 import com.mqd.eduservice.service.EduChapterService;
 import com.mqd.eduservice.service.EduCourseDescriptionService;
 import com.mqd.eduservice.service.EduCourseService;
+import com.mqd.eduservice.service.EduTeacherService;
 import com.mqd.exception.CustomException;
 import com.mqd.result.PageInfo;
 import com.mqd.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +42,9 @@ public class UserCourseController {
 
     @Resource
     private EduChapterService chapterService;
+
+    @Resource
+    private EduTeacherService teacherService;
 
     @ApiOperation(value = "获取课程")
     @GetMapping("/course")
@@ -94,6 +102,21 @@ public class UserCourseController {
             throw new CustomException("课程id"+id+"不存在");
         }
         return Result.ok().addData("courseChapter",chapterAllByCourseId);
+    }
+
+    @ApiOperation(value = "获取课程信息与描述")
+    @GetMapping("/course/{id}")
+    public Result getCourseInfo(@PathVariable String id){
+        EduCourse course = courseService.getById(id);
+        CourseFront courseFront = new CourseFront();
+        BeanUtils.copyProperties(course,courseFront);
+        EduCourseDescription description = courseDescriptionService.getById(id);
+        courseFront.setDescription(description.getDescription());
+        EduTeacher byId = teacherService.getById(course.getTeacherId());
+        courseFront.setTeacher(byId);
+        List<ChapterInfoVo> chapterAllByCourseId = chapterService.getChapterAllByCourseId(id);
+        courseFront.setChapter(chapterAllByCourseId);
+        return Result.ok().addData("courseInfo",courseFront);
     }
 
 }

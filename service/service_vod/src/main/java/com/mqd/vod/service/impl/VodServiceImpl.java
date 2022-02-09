@@ -5,10 +5,8 @@ import com.aliyun.vod.upload.req.UploadStreamRequest;
 import com.aliyun.vod.upload.resp.UploadStreamResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.profile.DefaultProfile;
-import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
-import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
+import com.aliyuncs.vod.model.v20170321.*;
 import com.mqd.vod.service.VodService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +46,21 @@ public class VodServiceImpl implements VodService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public String getPlayAuthById(String id) {
+        try {
+            DefaultAcsClient client = initVodClient(KEY_ID, KEY_SECRET);
+            GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
+            GetVideoPlayAuthResponse response = new GetVideoPlayAuthResponse();
+            request.setVideoId(id);
+            response = client.getAcsResponse(request);
+            return response.getPlayAuth();
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public DefaultAcsClient initVodClient(String accessKeyId, String accessKeySecret) throws ClientException {

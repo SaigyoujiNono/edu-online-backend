@@ -22,6 +22,9 @@ public class ChapterInfoVo {
     @ApiModelProperty(value = "显示排序")
     private Integer sort;
 
+    @ApiModelProperty(value = "课程ID")
+    private String courseId;
+
     @ApiModelProperty(value = "小节")
     private List<EduVideo> children = new ArrayList<>();
 

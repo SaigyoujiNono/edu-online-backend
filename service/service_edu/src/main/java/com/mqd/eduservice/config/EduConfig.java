@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class EduConfig {
-
     /**
      * 逻辑删除插件
      * 3.0以下使用LogicSqlInjector
